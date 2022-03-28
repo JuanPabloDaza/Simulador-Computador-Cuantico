@@ -178,7 +178,6 @@ def varianza(observable, vectorket): #Funcion para calcular la varianza de un ob
     return valoresperado(productomatrices(media, media),vectorket)
 
 def main():
-    '''
     posiciones = int(input("Numero de posiciones: "))
     vectorinicial = []
     for i in range(posiciones):
@@ -196,7 +195,7 @@ def main():
             amplitud = tuple(int(x) for x in valores.split(" "))
             vector2 += [[amplitud]]
         print(probabilidadVectorAOtro(vector2, vectorinicial))
-    '''
+    
     tamano = int(input("tamaño de la matriz: "))
     observable = []
     for i in range(tamano):
