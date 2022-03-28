@@ -85,7 +85,7 @@ def accionmatrizvectorComplex(A,v): #Funcion para realizar la accion de una matr
         suma = (0,0)
         for j in range(columnas):
             suma = sumacplx(suma, multcplx(A[i][j], v[j][0]))
-        matriz = matriz + [(suma)]
+        matriz.append([suma])
     return matriz
 
 def valoresperado(matriz, vector): #Funcion para hallar el valor esperado de un observable y un vector ket
@@ -101,6 +101,7 @@ def crearunitaria(n):#Funcion para crear una matriz unitaria con tamano nxn
             else:
                 fila += [(0, 0)]
         unitaria.append(fila)
+    return unitaria
 
 def inversamatriz(A): #Funcion par calcular la inversa de una matriz
     matriz = []
@@ -122,7 +123,7 @@ def adicionmatrices(A, B): #Funcion para realizar la adicion de matrices
         matriz = matriz + [fila]
     return matriz
 
-def multescalarmatriz(c, A): #Funcion para multulpiccar un escalar por una matriz
+def multescalarmatriz(c, A): #Funcion para multiplicar un escalar por una matriz
     matriz = []
     for i in range(len(A)):
         fila = []
@@ -132,7 +133,9 @@ def multescalarmatriz(c, A): #Funcion para multulpiccar un escalar por una matri
     return matriz
 
 def mediaobservable(observable, vectorket): #Funcion para calcular la media de un observable
-    return adicionmatrices(observable, inversamatriz(multescalarmatriz(valoresperado(observable, vectorket), crearunitaria(len(observable[0])))))
+    valore = valoresperado(observable, vectorket)
+    unitaria = crearunitaria(len(observable[0]))
+    return adicionmatrices(observable, inversamatriz(multescalarmatriz(valore[0], unitaria)))
 
 def traspuestacomplex(A): #Funcion para calcular la traspuesta de una matriz
     filas = len(A)
@@ -175,6 +178,7 @@ def varianza(observable, vectorket): #Funcion para calcular la varianza de un ob
     return valoresperado(productomatrices(media, media),vectorket)
 
 def main():
+    '''
     posiciones = int(input("Numero de posiciones: "))
     vectorinicial = []
     for i in range(posiciones):
@@ -192,9 +196,9 @@ def main():
             amplitud = tuple(int(x) for x in valores.split(" "))
             vector2 += [[amplitud]]
         print(probabilidadVectorAOtro(vector2, vectorinicial))
-    
+    '''
     tamano = int(input("tamaño de la matriz: "))
-    observable = [[]]
+    observable = []
     for i in range(tamano):
         fila = []
         for j in range(tamano):
@@ -203,6 +207,7 @@ def main():
             fila += [amplitud]
         observable += [fila]
     vectorket = []
+    
     for i in range(tamano):
         valores = input("Escriba el valor de la amplitud del vector ket, parte real e imaginaria separada por espacios: ")
         amplitud = tuple(int(x) for x in valores.split(" "))
@@ -210,4 +215,5 @@ def main():
     if matrizhermitiana(observable):
         print(mediaobservable(observable, vectorket))
         print(varianza(observable, vectorket))
+    
 main()
